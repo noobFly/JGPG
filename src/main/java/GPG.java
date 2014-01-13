@@ -24,6 +24,11 @@ public class GPG {
     println("----------");
   }
 
+  public <T> void output(T file) {
+    println("Outputing to: " + file);
+    output();
+  }
+
   public static GPG encrypt() {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--encrypt");
