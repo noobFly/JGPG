@@ -19,6 +19,7 @@ public class GPG {
   private String mode;
   private boolean armor = false;
   private List<String> recipients = new ArrayList<String>();
+  private static GPG gpg = null;
 
   public void output() {
     println("OPTIONS:");
@@ -28,14 +29,14 @@ public class GPG {
   }
 
   public static GPG encrypt() {
-    GPG gpg = new GPG();
     gpg.mode = "encrypt";
+    gpg = (null == gpg) ? new GPG() : gpg;
     return gpg;
   }
 
-    GPG gpg = new GPG();
-    gpg.mode = "clearsign";
   public static GPG sign() {
+    gpg = (null == gpg) ? new GPG() : gpg;
+    gpg.mode = "clearsign";
     return gpg;
   }
 
