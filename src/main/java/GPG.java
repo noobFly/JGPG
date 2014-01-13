@@ -11,7 +11,6 @@ public class GPG {
     println("main");
     GPG.encrypt().armor().recipient("0xrecipient").output();
     /*
-    GPG.encrypt().armor().recipient("0xrecipient").output();
     GPG.decrypt().armor().local-user("0xlocaluser").output("/tmp/a-file");
     GPG.sign().armor().();
     */
