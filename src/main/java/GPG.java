@@ -33,9 +33,9 @@ public class GPG {
     return gpg;
   }
 
-  public static GPG clearsign() {
     GPG gpg = new GPG();
     gpg.mode = "clearsign";
+  public static GPG sign() {
     return gpg;
   }
 
