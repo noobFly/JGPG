@@ -1,0 +1,18 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+defaultTasks 'run'
+
+def className = "${project.name[1..-1]}"
+mainClassName = "se.soy.${className.toLowerCase()}.${className}"
+
+repositories.mavenCentral()
+
+dependencies.testCompile 'junit:junit:4.+'
+
+test {
+    reports.junitXml.enabled = false
+    reports.html.enabled = false
+}
+
+jar.manifest.attributes 'Main-Class': mainClassName
