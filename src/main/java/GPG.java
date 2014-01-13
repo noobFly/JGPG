@@ -22,6 +22,7 @@ public class GPG {
   public void output() {
     println("Command: " + command);
     println("----------");
+    gpg = null;
   }
 
   public <T> void output(T file) {
