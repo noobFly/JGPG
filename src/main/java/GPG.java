@@ -20,7 +20,6 @@ public class GPG {
   private static GPG gpg = null;
 
   public void output() {
-    println("OPTIONS:");
     println("Command:");
     println(command);
   }
