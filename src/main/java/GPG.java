@@ -13,7 +13,7 @@ public class GPG {
     GPG.sign().armor().();
     */
   }
-  private boolean armor = false; 
+  private boolean armor = false;
   private String recipient;
 
   public void output() {
