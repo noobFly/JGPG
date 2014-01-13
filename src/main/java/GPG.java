@@ -16,38 +16,35 @@ public class GPG {
     */
   }
 
-  private String mode;
-  private boolean armor = false;
-  private List<String> recipients = new ArrayList<String>();
+  private List<String> command = new ArrayList<String>();
   private static GPG gpg = null;
 
   public void output() {
     println("OPTIONS:");
-    println(String.format("mode: %s", mode));
-    println(String.format("armor?: %s", (armor) ? "true" : "false"));
-    println(String.format("recipients?: %s", recipients));
+    println("Command:");
+    println(command);
   }
 
   public static GPG encrypt() {
-    gpg.mode = "encrypt";
     gpg = (null == gpg) ? new GPG() : gpg;
+    gpg.command.add("--encrypt");
     return gpg;
   }
 
   public static GPG sign() {
     gpg = (null == gpg) ? new GPG() : gpg;
-    gpg.mode = "clearsign";
+    gpg.command.add("--sign");
     return gpg;
   }
 
   public GPG armor() {
-    this.armor = true;
+    command.add("--armor");
     return this;
   }
 
   // TODO: Add recipients(List<String> recipients)
   public GPG recipient(String recipient) {
-    this.recipients.add(recipient);
+    command.add("-r " + recipient);
     return this;
   }
 }
