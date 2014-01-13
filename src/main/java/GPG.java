@@ -52,4 +52,9 @@ public class GPG {
     command.add("--recipient " + recipient);
     return this;
   }
+
+  public GPG localUser(String localUser) {
+    command.add("--local-user " + localUser);
+    return this;
+  }
 }
