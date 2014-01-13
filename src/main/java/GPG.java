@@ -1,5 +1,8 @@
 package se.soy.gpg;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class GPG {
   // FIXME Remove when done
   static<T> void println(T arg) { System.out.println(arg); }
@@ -13,13 +16,14 @@ public class GPG {
     GPG.sign().armor().();
     */
   }
+
   private boolean armor = false;
-  private String recipient;
+  private List<String> recipients = new ArrayList<String>();
 
   public void output() {
     println("OPTIONS:");
     println(String.format("armor?: %s", (armor) ? "true" : "false"));
-    println(String.format("recipient?: %s", recipient));
+    println(String.format("recipients?: %s", recipients));
   }
 
   public static GPG encrypt() {
@@ -34,7 +38,7 @@ public class GPG {
   }
 
   public GPG recipient(String recipient) {
-    this.recipient = recipient;
+    this.recipients.add(recipient);
     return this;
   }
 }
