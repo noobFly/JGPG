@@ -39,6 +39,7 @@ public class GPG {
     return this;
   }
 
+  // TODO: Add recipients(List<String> recipients)
   public GPG recipient(String recipient) {
     this.recipients.add(recipient);
     return this;
