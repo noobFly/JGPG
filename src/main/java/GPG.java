@@ -20,8 +20,8 @@ public class GPG {
   private static GPG gpg = null;
 
   public void output() {
-    println("Command:");
-    println(command);
+    println("Command: " + command);
+    println("----------");
   }
 
   public static GPG encrypt() {
