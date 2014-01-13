@@ -33,6 +33,12 @@ public class GPG {
     return gpg;
   }
 
+  public static GPG clearsign() {
+    GPG gpg = new GPG();
+    gpg.mode = "clearsign";
+    return gpg;
+  }
+
   public GPG armor() {
     this.armor = true;
     return this;
