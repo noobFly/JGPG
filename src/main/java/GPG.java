@@ -17,18 +17,20 @@ public class GPG {
     */
   }
 
+  private String mode;
   private boolean armor = false;
   private List<String> recipients = new ArrayList<String>();
 
   public void output() {
     println("OPTIONS:");
+    println(String.format("mode: %s", mode));
     println(String.format("armor?: %s", (armor) ? "true" : "false"));
     println(String.format("recipients?: %s", recipients));
   }
 
   public static GPG encrypt() {
     GPG gpg = new GPG();
-    println("encrypt()");
+    gpg.mode = "encrypt";
     return gpg;
   }
 
