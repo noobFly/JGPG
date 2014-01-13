@@ -44,7 +44,7 @@ public class GPG {
 
   // TODO: Add recipients(List<String> recipients)
   public GPG recipient(String recipient) {
-    command.add("-r " + recipient);
+    command.add("--recipient " + recipient);
     return this;
   }
 }
