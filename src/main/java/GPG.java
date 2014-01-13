@@ -30,6 +30,12 @@ public class GPG {
     return gpg;
   }
 
+  public static GPG decrypt() {
+    gpg = (null == gpg) ? new GPG() : gpg;
+    gpg.command.add("--decrypt");
+    return gpg;
+  }
+
   public static GPG sign() {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--sign");
