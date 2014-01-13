@@ -9,7 +9,7 @@ public class GPG {
 
   public static void main(String[] args) {
     GPG.encrypt().armor().sign().recipient("0xrecipient").output();
-    GPG.decrypt().armor().localUser("0xlocaluser").output("/tmp/a-file");
+    GPG.decrypt().localUser("0xlocaluser").output("/tmp/a-file");
   }
 
   private List<String> command = new ArrayList<String>();
