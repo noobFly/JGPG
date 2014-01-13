@@ -10,8 +10,8 @@ public class GPG {
   public static void main(String[] args) {
     println("main");
     GPG.encrypt().armor().sign().recipient("0xrecipient").output();
+    GPG.decrypt().armor().localUser("0xlocaluser").output("/tmp/a-file");
     /*
-    GPG.decrypt().armor().local-user("0xlocaluser").output("/tmp/a-file");
     GPG.sign().armor().();
     */
   }
