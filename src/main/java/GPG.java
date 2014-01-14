@@ -12,11 +12,19 @@ public class GPG {
     GPG.decrypt().localUser("0xlocaluser").output("/tmp/a-file");
   }
 
+  private final List<String> pre_command = new ArrayList<String>(Arrays.asList(
+    "gpg",
+    "--default-recipient-self",
+    "--no-tty",
+    "--batch",
+    "--yes"
+    )
+  );
   private List<String> command = new ArrayList<String>();
   private static GPG gpg = null;
 
   public void output() {
-    println("Command: " + command);
+    println("Command: " + pre_command + command);
     println("----------");
     gpg = null;
   }
