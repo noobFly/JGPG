@@ -59,12 +59,14 @@ public class GPG {
 
   // TODO: Add recipients(List<String> recipients)
   public GPG recipient(String recipient) {
-    command.add("--recipient " + recipient);
+    command.add("--recipient");
+    command.add(recipient);
     return this;
   }
 
   public GPG localUser(String localUser) {
-    command.add("--local-user " + localUser);
+    command.add("--local-user");
+    command.add(localUser);
     return this;
   }
 }
