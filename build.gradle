@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-defaultTasks 'run'
+defaultTasks 'test'
 
 def className = "${project.name[1..-1]}"
 mainClassName = "se.soy.${className.toLowerCase()}.${className}"
