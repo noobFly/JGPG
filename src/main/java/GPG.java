@@ -45,9 +45,11 @@ public class GPG {
     return gpg;
   }
 
-  public static GPG decrypt() {
+  public static GPG decrypt(String data) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--decrypt");
+    // FIXME secureErase()
+    gpg.data = data;
     return gpg;
   }
 
