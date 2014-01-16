@@ -6,6 +6,7 @@ defaultTasks 'test'
 repositories.mavenCentral()
 
 dependencies.testCompile 'junit:junit:4.+'
+dependencies.compile fileTree(dir: 'libs', include: '*.jar')
 
 test {
   systemProperty "test.resources", file('src/test/resources')
