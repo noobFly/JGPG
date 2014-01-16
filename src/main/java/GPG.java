@@ -24,6 +24,7 @@ public class GPG {
   );
   private List<String> command = new ArrayList<String>();
   private static GPG gpg = null;
+  private String data;
 
   public void output() {
     println("Command: " + pre_command + command);
