@@ -7,10 +7,12 @@ public class GPG {
   // FIXME Remove when done
   static<T> void println(T arg) { System.out.println(arg); }
 
-  public static void main(String[] args) {
-    GPG.encrypt().armor().sign().recipient("0xrecipient").output();
-    GPG.decrypt().localUser("0xlocaluser").output("/tmp/a-file");
-  }
+  /*
+  FIXME: Add as tests
+  GPG.decrypt(java.io.File).output();
+  GPG.decrypt("string").output(System.out, "println");
+  GPG.decrypt("string").output(java.io.File);
+  */
 
   private final List<String> pre_command = new ArrayList<String>(Arrays.asList(
     "gpg",
