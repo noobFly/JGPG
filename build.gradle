@@ -11,8 +11,10 @@ repositories.mavenCentral()
 dependencies.testCompile 'junit:junit:4.+'
 
 test {
-    reports.junitXml.enabled = false
-    reports.html.enabled = false
+  systemProperty "test.resources", file('src/test/resources')
+  environment GNUPGHOME: file('src/test/resources/.gnupg')
+  reports.junitXml.enabled = false
+  reports.html.enabled = false
 }
 
 jar.manifest.attributes 'Main-Class': mainClassName
