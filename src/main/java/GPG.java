@@ -71,4 +71,10 @@ public class GPG {
     command.add(localUser);
     return this;
   }
+
+  public GPG home(String home) {
+    command.add("--home");
+    command.add(home);
+    return this;
+  }
 }
