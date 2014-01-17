@@ -13,4 +13,7 @@ test {
   environment GNUPGHOME: file('src/test/resources/.gnupg')
   reports.junitXml.enabled = false
   reports.html.enabled = false
+  // TODO Figure out how to disable the output of tests since it screws with
+  // the searching of the secret in the heap.
+  testLogging.showStandardStreams = true
 }
