@@ -11,14 +11,6 @@ public class GPG {
   // FIXME Remove when done
   static<T> void println(T arg) { System.out.println(arg); }
 
-  /*
-  TODO: Add as tests and implement
-  GPG.{en,de}crypt(java.io.File)
-  GPG.{en,de}crypt("string")
-  GPG.output(System.out, "println");
-  GPG.output(java.io.File);
-  */
-
   private final List<String> pre_command = new ArrayList<String>(Arrays.asList(
     "gpg",
     "--default-recipient-self",
@@ -182,7 +174,6 @@ public class GPG {
     return this;
   }
 
-  // TODO: Add recipients(List<String> recipients)
   public GPG recipient(String recipient) {
     command.add("--recipient");
     command.add(recipient);
