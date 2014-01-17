@@ -1,3 +1,4 @@
 .gradle
 build/
 src/test/resources/.gnupg/random_seed
+*.hprof
