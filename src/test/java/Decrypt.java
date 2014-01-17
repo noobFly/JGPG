@@ -5,7 +5,7 @@ import se.soy.gpg.GPG;
 
 public class Decrypt {
   @Test public void decrypt() {
-    GPG.decrypt(new File(System.getProperty("test.resources") + "/test.asc")).localUser("0xF870C097").output();
+    GPG.decrypt(new File(System.getProperty("test.resources") + "/test.asc")).localUser("0xF870C097").output(System.out, "println");
     assertEquals("Secret not found!", 0, 0);
   }
 }
