@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.*;
+import se.soy.securerstring.SecurerString;
+import java.lang.reflect.*;
 
 public class GPG {
   // FIXME Remove when done
@@ -29,7 +31,7 @@ public class GPG {
   private static GPG gpg = null;
   private String data;
 
-  public void output() {
+  public void output(Object className, String methodName) {
     println("Command: " + pre_command + command);
     println("----------");
 
@@ -57,46 +59,46 @@ public class GPG {
         throw new GPGException(exception);
       }
 
-      /* Reader stdout = new InputStreamReader(p.getInputStream()); */
-      BufferedReader stdout = new BufferedReader(new InputStreamReader(p.getInputStream()));
-      /* char buf[] = new char[1024]; */
-      /* char meow[] = new char[expectedSize]; */
-      /* int read_now = 0; */
-      /* int read_until_now = 0; */
-      /* try (SecurerString decrypted = new SecurerString(meow)) { */
-      /*   try (SecurerString ss_buf = new SecurerString(buf)) { */
-        /*   while ((read_now = stdout.read(ss_buf.chars, 0, 1024)) != -1) { */
-        /*     System.arraycopy(ss_buf.chars, 0, decrypted.chars, read_until_now, read_now); */
-        /*     read_until_now += read_now; */
-        /*   } */
-        /* } */
-        /* System.out.println(read_until_now); */
-      while ((line = stdout.readLine ()) != null) {
-        System.out.println(line);
-      }
-      stdout.close();
+      InputStream is = p.getInputStream();
+      Reader stdout = new InputStreamReader(is);
+      final int available = is.available();
+      final int buf_size = available < 4096 ? 4096 : available;
+      char buf[] = new char[buf_size];
+      int read_now = 0;
+      int read_until_now = 0;
+      try (SecurerString decrypted = new SecurerString(buf)) {
+        while ((read_now = stdout.read(decrypted.chars, read_until_now, decrypted.chars.length - read_until_now)) != -1) {
+          if (decrypted.chars.length - read_until_now < buf_size) {
+            char newbuff[] = new char[decrypted.chars.length << 1];
+            System.arraycopy(decrypted.chars, 0, newbuff, 0, read_until_now);
+            SecurerString.secureErase(decrypted.chars);
+            decrypted.chars = newbuff;
+          }
+          read_until_now += read_now;
+        }
+        stdout.close();
+        System.out.println(read_until_now);
 
       /*   // http://stackoverflow.com/a/5428621 */
-      /*   Class<?> c; */
-      /*   Method method; */
-      /*   try { */
-      /*     try { */
-      /*       c = (Class<?>)className; */
-      /*     } */
-      /*     catch (ClassCastException e) { */
-      /*       c = className.getClass (); */
-      /*     } */
+        Class<?> c;
+        Method method;
+        try {
+          try {
+            c = (Class<?>)className;
+          }
+          catch (ClassCastException e) {
+            c = className.getClass ();
+          }
 
-      /*     System.out.println("invoking " + c.getSimpleName () + "::[" + methodName + "]..."); */
-      /*     method = c.getDeclaredMethod(methodName, decrypted.chars.getClass()); */
-      /*     method.invoke(className, decrypted.chars); */
-      /*   } */
-      /*   // FIXME Which exceptions? */
-      /*   catch (Exception e) { */
-      /*     e.printStackTrace(); */
-      /*   } */
-      /* } */
-
+          System.out.println("invoking " + c.getSimpleName () + "::[" + methodName + "]...");
+          method = c.getDeclaredMethod(methodName, decrypted.chars.getClass());
+          method.invoke(className, decrypted.chars);
+        }
+        // FIXME Which exceptions?
+        catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -105,29 +107,26 @@ public class GPG {
       throw new RuntimeException(e);
     }
     finally {
+      SecurerString.secureErase(gpg.data);
       gpg = null;
     }
-  /* } */
-
   }
 
   public <T> void output(T file) {
     println("Outputing to: " + file);
-    output();
   }
 
   public static GPG encrypt(String data) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--encrypt");
-    // FIXME secureErase()
     gpg.data = data;
+    SecurerString.secureErase(data);
     return gpg;
   }
 
   public static GPG decrypt(File file) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--decrypt");
-    // FIXME secureErase()
     try {
       gpg.data = readFileAsString(file.toString(), null);
     }
@@ -167,8 +166,8 @@ public class GPG {
   public static GPG decrypt(String data) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--decrypt");
-    // FIXME secureErase()
     gpg.data = data;
+    SecurerString.secureErase(data);
     return gpg;
   }
 
