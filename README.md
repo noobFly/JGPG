@@ -15,6 +15,8 @@ TODO
  * GPG.{en,de}crypt("string")
  * GPG.output(System.out, "println");
  * GPG.output(java.io.File);
+* Figure out how to disable the output of Gradles tests since it screws with
+  the searching of the secret in the heap.
 
 License
 -------
