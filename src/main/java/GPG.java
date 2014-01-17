@@ -58,9 +58,11 @@ public class GPG {
       char buf[] = new char[buf_size];
       int read_now = 0;
       int read_until_now = 0;
+      System.out.println("Buffer size:" + buf_size);
       try (SecurerString decrypted = new SecurerString(buf)) {
         while ((read_now = stdout.read(decrypted.chars, read_until_now, decrypted.chars.length - read_until_now)) != -1) {
           if (decrypted.chars.length - read_until_now < buf_size) {
+            System.out.println("Expanding char");
             char newbuff[] = new char[decrypted.chars.length << 1];
             System.arraycopy(decrypted.chars, 0, newbuff, 0, read_until_now);
             SecurerString.secureErase(decrypted.chars);
