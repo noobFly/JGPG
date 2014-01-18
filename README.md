@@ -9,7 +9,6 @@ It uses the builder pattern.
 TODO
 ----
 * Make the tests check so that encrypted data is the same decrypted.
-* Make sure we don't leak any secrets to memory
 * Replace all println's with [logback](http://logback.qos.ch/)
 * Make it possible to add a List<String> of recipients
 * Add as tests and implement
