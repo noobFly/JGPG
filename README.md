@@ -8,6 +8,7 @@ It uses the builder pattern.
 
 TODO
 ----
+* Fix so the tests actually work/does something
 * Replace all println's with [logback](http://logback.qos.ch/)
 * Make it possible to add a List<String> of recipients
 * Add as tests and implement
