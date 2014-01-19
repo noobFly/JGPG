@@ -113,7 +113,6 @@ public class GPG {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--encrypt");
     gpg.data = data;
-    SecurerString.secureErase(data);
     return gpg;
   }
 
