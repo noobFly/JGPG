@@ -12,7 +12,6 @@ TODO
 * Replace all println's with [logback](http://logback.qos.ch/)
 * Make it possible to add a List<String> of recipients
 * Add as tests and implement
- * GPG.{en,de}crypt(java.io.File)
  * GPG.{en,de}crypt("string")
 * Figure out how to disable the output of Gradles tests since it screws with
   the searching of the secret in the heap.

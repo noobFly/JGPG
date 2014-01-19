@@ -135,6 +135,18 @@ public class GPG {
   public static GPG encrypt(File file) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--encrypt");
+    gpg.postEncryptOrDecryptFile(file);
+    return gpg;
+  }
+
+  public static GPG decrypt(File file) {
+    gpg = (null == gpg) ? new GPG() : gpg;
+    gpg.command.add("--decrypt");
+    gpg.postEncryptOrDecryptFile(file);
+    return gpg;
+  }
+
+  private void postEncryptOrDecryptFile(File file) {
     try {
       gpg.data = readFileAsString(file.toString(), null);
     }
@@ -143,19 +155,6 @@ public class GPG {
         SecurerString.secureErase(gpg.data);
       }
     }
-    return gpg;
-  }
-
-  public static GPG decrypt(File file) {
-    gpg = (null == gpg) ? new GPG() : gpg;
-    gpg.command.add("--decrypt");
-    try {
-      gpg.data = readFileAsString(file.toString(), null);
-    }
-    catch (IOException e) {
-      gpg.data = null;
-    }
-    return gpg;
   }
 
   // http://ptspts.blogspot.com/2009/11/how-to-read-whole-file-to-string-in.html
