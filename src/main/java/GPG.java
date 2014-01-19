@@ -81,7 +81,7 @@ public class GPG {
             c = (Class<?>)className;
           }
           catch (ClassCastException e) {
-            c = className.getClass ();
+            c = className.getClass();
           }
 
           System.out.println("invoking " + c.getSimpleName () + "::[" + methodName + "]...");
