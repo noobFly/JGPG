@@ -116,6 +116,20 @@ public class GPG {
     return gpg;
   }
 
+  public static GPG encrypt(File file) {
+    gpg = (null == gpg) ? new GPG() : gpg;
+    gpg.command.add("--encrypt");
+    try {
+      gpg.data = readFileAsString(file.toString(), null);
+    }
+    catch (IOException e) {
+      if (null != gpg.data) {
+        SecurerString.secureErase(gpg.data);
+      }
+    }
+    return gpg;
+  }
+
   public static GPG decrypt(File file) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--decrypt");
