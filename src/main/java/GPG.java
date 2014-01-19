@@ -102,8 +102,7 @@ public class GPG {
         method = c.getDeclaredMethod(methodName, buf.getClass());
         method.invoke(className, buf);
       }
-      // FIXME Which exceptions?
-      catch (Exception e) {
+      catch (NoSuchMethodException|IllegalAccessException|InvocationTargetException e) {
         e.printStackTrace();
       }
     }
