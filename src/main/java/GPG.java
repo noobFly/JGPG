@@ -102,7 +102,6 @@ public class GPG {
     }
     finally {
       SecurerString.secureErase(gpg.data);
-      gpg = null;
     }
   }
 
