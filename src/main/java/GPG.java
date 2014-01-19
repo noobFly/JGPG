@@ -112,8 +112,17 @@ public class GPG {
     }
   }
 
-  public <T> void output(T file) {
-    println("Outputing to: " + file);
+  public void output(File file) {
+    try {
+      command.add("--output");
+      command.add(file.getAbsolutePath());
+
+      pre_output();
+    }
+    finally {
+      SecurerString.secureErase(buf);
+      SecurerString.secureErase(gpg.data);
+    }
   }
 
   public static GPG encrypt(String data) {
