@@ -1,7 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.io.File;
 import se.soy.gpg.GPG;
+import java.io.File;
 import java.io.PrintStream;
 import java.io.OutputStream;
 
