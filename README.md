@@ -18,6 +18,7 @@ TODO
  * GPG.output(java.io.File);
 * Figure out how to disable the output of Gradles tests since it screws with
   the searching of the secret in the heap.
+* Do something about all the e.printStackTrace's.
 
 License
 -------
