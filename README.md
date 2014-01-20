@@ -4,7 +4,9 @@ Introduction
 J<del>RPG</del><ins>GPG</ins> is a Java wrapper for GPG2 and gpg-agent with focus on
 client-side usage.
 
-It uses the builder pattern.
+It uses the builder pattern, and uses
+[SecurerString](https://github.com/simmel/SecurerString) to securely scrub
+secrets from memory/heap.
 
 TODO
 ----
