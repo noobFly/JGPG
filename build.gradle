@@ -12,7 +12,7 @@ dependencies.testCompile(
 dependencies.compile fileTree(dir: 'libs', include: '*.jar')
 
 test {
-  systemProperty "test.resources", file('src/test/resources')
+  systemProperty "test.resources", sourceSets['test'].output.resourcesDir.toString()
   systemProperty "temporaryDir", temporaryDir
   environment GNUPGHOME: file('src/test/resources/.gnupg')
   reports.junitXml.enabled = false
