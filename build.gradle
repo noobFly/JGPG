@@ -5,7 +5,10 @@ defaultTasks 'test'
 
 repositories.mavenCentral()
 
-dependencies.testCompile 'junit:junit:4.+'
+dependencies.testCompile(
+    ['junit:junit:4.+'],
+    ['junit-addons:junit-addons:1.+'],
+)
 dependencies.compile fileTree(dir: 'libs', include: '*.jar')
 
 test {
