@@ -7,22 +7,29 @@ import se.soy.securerstring.SecurerString;
 
 public class EncryptDecryptString extends SearchInHeap {
   /* This is a horrible horrible hack, *NEVER* do this in production code! */
+  public static String encryptedString = null;
   public static String decryptedString = null;
-  public static void copyToString(char[] output) {
+
+  public static void encryptToString(char[] output) {
+    String unTrimmedString = new String(output);
+    encryptedString = unTrimmedString.trim();
+    SecurerString.secureErase(unTrimmedString);
+  }
+
+  public static void decryptToString(char[] output) {
     String unTrimmedString = new String(output);
     decryptedString = unTrimmedString.trim();
     SecurerString.secureErase(unTrimmedString);
   }
 
-  @Test public void decrypt() throws IOException {
+  @Test public void encryptDecryptString() throws IOException {
     String toEncrypt = GPG.readFileAsString(System.getProperty("test.resources") + "/test", null);
-    GPG.encrypt(toEncrypt).armor().sign().output(new File(System.getProperty("test.resources") + "/EncryptDecryptString.asc"));
-    // Re-read it again since .encrypt() secureErase's it.
+    GPG.encrypt(toEncrypt).armor().sign().output(EncryptDecryptString.class, "encryptToString");
     toEncrypt = GPG.readFileAsString(System.getProperty("test.resources") + "/test", null);
-    GPG.decrypt(new File(System.getProperty("test.resources") + "/EncryptDecryptString.asc"))
-      .localUser("0xF870C097").output(EncryptDecryptString.class, "copyToString");
+    GPG.decrypt(encryptedString).output(EncryptDecryptString.class, "decryptToString");
     assertEquals(toEncrypt, decryptedString);
     SecurerString.secureErase(toEncrypt);
+    SecurerString.secureErase(encryptedString);
     SecurerString.secureErase(decryptedString);
   }
 }
