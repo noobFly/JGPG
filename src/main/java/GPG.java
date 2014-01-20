@@ -141,6 +141,13 @@ public class GPG {
     return gpg;
   }
 
+  public static GPG decrypt(String data) {
+    gpg = (null == gpg) ? new GPG() : gpg;
+    gpg.command.add("--decrypt");
+    gpg.data = data;
+    return gpg;
+  }
+
   public static GPG decrypt(File file) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--decrypt");
@@ -183,15 +190,6 @@ public class GPG {
     } finally {
       is.close();
     }
-  }
-
-
-  public static GPG decrypt(String data) {
-    gpg = (null == gpg) ? new GPG() : gpg;
-    gpg.command.add("--decrypt");
-    gpg.data = data;
-    SecurerString.secureErase(data);
-    return gpg;
   }
 
   public static GPG sign() {
