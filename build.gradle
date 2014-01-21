@@ -11,6 +11,17 @@ dependencies.testCompile(
 )
 dependencies.compile fileTree(dir: 'libs', include: '*.jar')
 
+task checkJhat {
+  def result = exec {
+    commandLine "pgrep", "-qf", "jhat", "-port"
+    ignoreExitValue true
+  }
+  if (!result.getExitValue()) {
+    logger.error('\033[0;31mERROR: Found jhat(s) running, this will produce erroneous test results!\033[0m')
+  }
+}
+test.dependsOn checkJhat
+
 test {
   systemProperty "test.resources", sourceSets['test'].output.resourcesDir.toString()
   systemProperty "temporaryDir", temporaryDir
