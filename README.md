@@ -10,7 +10,6 @@ secrets from memory/heap.
 
 TODO
 ----
-* Make the tests check so that encrypted data is the same decrypted.
 * Replace all println's with [logback](http://logback.qos.ch/)
 * Make it possible to add a List<String> of recipients
 * Figure out how to disable the output of Gradles tests since it screws with
