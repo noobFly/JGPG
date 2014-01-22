@@ -49,6 +49,8 @@ public class GPG {
           exception += "\n" + line;
         }
         stderr.close();
+        SecurerString.secureErase(gpg.data);
+        gpg = null;
         throw new GPGException(exception);
       }
 
@@ -73,12 +75,10 @@ public class GPG {
       stdout.close();
       System.out.println(read_until_now);
     }
-    catch (IOException e) {
+    catch (IOException|InterruptedException e) {
       SecurerString.secureErase(buf);
-      throw new RuntimeException(e);
-    }
-    catch (InterruptedException e) {
-      SecurerString.secureErase(buf);
+      SecurerString.secureErase(gpg.data);
+      gpg = null;
       throw new RuntimeException(e);
     }
   }
@@ -114,17 +114,14 @@ public class GPG {
   }
 
   public void output(File file) {
-    try {
-      command.add("--output");
-      command.add(file.getAbsolutePath());
+    command.add("--output");
+    command.add(file.getAbsolutePath());
 
-      pre_output();
-    }
-    finally {
-      SecurerString.secureErase(buf);
-      SecurerString.secureErase(gpg.data);
-      gpg = null;
-    }
+    pre_output();
+
+    SecurerString.secureErase(buf);
+    SecurerString.secureErase(gpg.data);
+    gpg = null;
   }
 
   public static GPG encrypt(String data) {
