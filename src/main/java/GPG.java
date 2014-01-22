@@ -209,6 +209,13 @@ public class GPG {
     return this;
   }
 
+  public GPG recipient(List<String> recipients) {
+    for (String recipient: recipients) {
+      recipient(recipient);
+    }
+    return this;
+  }
+
   public GPG localUser(String localUser) {
     command.add("--local-user");
     command.add(localUser);
