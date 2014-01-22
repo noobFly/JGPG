@@ -14,6 +14,10 @@ TODO
 * Figure out how to disable the output of Gradles tests since it screws with
   the searching of the secret in the heap.
 * Do something about all the e.printStackTrace's.
+* Decrypt without armor() doesn't work!
+* When exceptions are thrown in pre\_command() output get NPE since it doesn't
+  do anything about the exceptions.
+* Create a test which generates a GPGException
 
 License
 -------
