@@ -1,6 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-import se.soy.gpg.GPG;
+import se.soy.gpg.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -27,5 +27,14 @@ public class CommonOptions {
       GPG.decrypt(encryptedTest).localUser(recipient).output(decryptedTest);
       FileAssert.assertBinaryEquals(decryptedTest, toEncrypt);
     }
+  }
+
+  @Test(expected=GPGException.class) public void generateGPGException() {
+    File toDecrypt = new File(System.getProperty("test.resources") + "/generateGPGException");
+    try {
+      toDecrypt.createNewFile();
+    }
+    catch (Exception e) {}
+    GPG.decrypt(toDecrypt).output(System.out, "println");
   }
 }
