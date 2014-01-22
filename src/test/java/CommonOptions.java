@@ -21,8 +21,6 @@ public class CommonOptions {
 
   @Test public void multipleRecipients() {
     File encryptedTest = new File(System.getProperty("test.resources") + "/multipleRecipients.asc");
-    System.out.println(encryptedTest);
-    System.out.println(toEncrypt);
     GPG.encrypt(toEncrypt).armor().recipient(recipients).output(encryptedTest);
     for (String recipient: recipients) {
       File decryptedTest = new File(System.getProperty("test.resources") + "/multipleRecipients-" + recipient);
