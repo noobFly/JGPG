@@ -23,8 +23,13 @@ public class GPG {
   private static GPG gpg = null;
   private String data;
   private char[] buf;
+  private File file;
 
   private void pre_output() {
+    if (null != file) {
+      command.add(file.getAbsolutePath());
+    }
+
     println("Command: " + pre_command + command);
     println("----------");
 
@@ -35,8 +40,10 @@ public class GPG {
       ProcessBuilder pb = new ProcessBuilder(commandline);
 
       Process p = pb.start();
-      p.getOutputStream().write(gpg.data.getBytes());
-      p.getOutputStream().flush();
+      if (null != gpg.data) {
+        p.getOutputStream().write(gpg.data.getBytes());
+        p.getOutputStream().flush();
+      }
       p.getOutputStream().close();
 
       String line = null;
@@ -134,7 +141,7 @@ public class GPG {
   public static GPG encrypt(File file) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--encrypt");
-    gpg.postEncryptOrDecryptFile(file);
+    gpg.file = file;
     return gpg;
   }
 
@@ -148,19 +155,8 @@ public class GPG {
   public static GPG decrypt(File file) {
     gpg = (null == gpg) ? new GPG() : gpg;
     gpg.command.add("--decrypt");
-    gpg.postEncryptOrDecryptFile(file);
+    gpg.file = file;
     return gpg;
-  }
-
-  private void postEncryptOrDecryptFile(File file) {
-    try {
-      gpg.data = readFileAsString(file.toString(), null);
-    }
-    catch (IOException e) {
-      if (null != gpg.data) {
-        SecurerString.secureErase(gpg.data);
-      }
-    }
   }
 
   // http://ptspts.blogspot.com/2009/11/how-to-read-whole-file-to-string-in.html
