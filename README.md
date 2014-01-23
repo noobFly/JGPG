@@ -14,7 +14,12 @@ TODO
 * Figure out how to disable the output of Gradles tests since it screws with
   the searching of the secret in the heap.
 * Do something about all the e.printStackTrace's.
+* Make sure {en,de}crypt(File) uses GPG's file
 * Decrypt without armor() doesn't work!
+ * Make sure secureErase(byte[]) works
+ * Use a byte[] data instead of String data
+ * Rewrite EEEVVEEERYYYTHIIIIING
+* Change from RuntimeException? Investigate why it doesn't need to be catched and what we should use instead.
 
 License
 -------
