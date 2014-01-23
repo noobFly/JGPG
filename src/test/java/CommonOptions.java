@@ -13,7 +13,7 @@ public class CommonOptions {
   @Test public void localUsers() {
     for (String recipient: recipients) {
       File toDecrypt = new File(System.getProperty("test.resources") + "/test.asc");
-      File decryptedTest = new File(System.getProperty("test.resources") + "/CommonOptions-localUsers-" + recipient + ".asc");
+      File decryptedTest = new File(System.getProperty("test.resources") + "/CommonOptions-localUsers-" + recipient);
       GPG.decrypt(toDecrypt).localUser(recipient).output(decryptedTest);
       FileAssert.assertBinaryEquals(decryptedTest, toEncrypt);
     }
