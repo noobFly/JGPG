@@ -2,3 +2,4 @@
 build/
 src/test/resources/.gnupg/random_seed
 *.hprof
+src/test/resources/.gnupg/.#*
