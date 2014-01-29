@@ -26,6 +26,34 @@ public class SearchInHeap {
     }
   }
 
+  // FIXME Add @After when SecurerString.secureErase(byte[]) is implemented
+  public void searchInHeapForByte() throws IOException, InterruptedException, XPathExpressionException {
+    try {
+      setupSearchInHeap();
+      runOQL("select {" +
+             "  obj:b," +
+             "  value:(function(b) {" +
+             "    var a = '';" +
+             "    for (var i = 0; i < b.length; i++) {" +
+             "      a+=String.fromCharCode(b[i]);" +
+             "    }" +
+             "    return escape(a);" +
+             "  })(b)" +
+             "} " +
+             "from [B b where " +
+             "(function(b) {" +
+             "  var a = '';" +
+             "  for (var i = 0; i < b.length; i++) {" +
+             "    a+=String.fromCharCode(b[i]);" +
+             "  }" +
+             "  return /really_secret_string/(a);" +
+             "})(b)");
+    }
+    finally {
+      tearDown();
+    }
+  }
+
   public void setupSearchInHeap() throws IOException, InterruptedException, XPathExpressionException {
     if (isSetup) {
       return;
