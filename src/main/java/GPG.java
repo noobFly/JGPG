@@ -110,7 +110,7 @@ public class GPG {
         method.invoke(className, buf);
       }
       catch (NoSuchMethodException|IllegalAccessException|InvocationTargetException e) {
-        e.printStackTrace();
+        throw new GPGException(e.toString());
       }
     }
     finally {

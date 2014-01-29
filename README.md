@@ -13,7 +13,6 @@ TODO
 * Replace all println's with [logback](http://logback.qos.ch/)
 * Figure out how to disable the output of Gradles tests since it screws with
   the searching of the secret in the heap.
-* Do something about all the e.printStackTrace's.
 * Fix storing non-armored GPG data in byte arrays. No matter how I tried I
   could not get it to decrypt properly, this is what gpg said:
 ```
