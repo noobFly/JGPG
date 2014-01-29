@@ -14,6 +14,8 @@ TODO
   the searching of the secret in the heap.
 * Fix storing non-armored GPG data in byte arrays. No matter how I tried I
   could not get it to decrypt properly, this is what gpg said:
+* Add `verify` and tests.
+* Add tests for `home()`.
 ```
 gpg: encrypted with 1024-bit RSA key, ID 49E17571, created 2014-01-09
       "test test (test) <test@test>"
