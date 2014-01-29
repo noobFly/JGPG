@@ -37,4 +37,8 @@ public class CommonOptions {
     catch (Exception e) {}
     GPG.decrypt(toDecrypt).output(System.out, "println");
   }
+
+  @Test(expected=GPGException.class) public void erroneousHome() {
+    GPG.encrypt(toEncrypt).home(System.getProperty("temporaryDir") + "/fake-gpg-home").output(System.out, "println");
+  }
 }
