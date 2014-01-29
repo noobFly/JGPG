@@ -19,7 +19,7 @@ public class SearchInHeap {
   public void searchInHeapForChar() throws IOException, InterruptedException, XPathExpressionException {
     try {
       setupSearchInHeap();
-      runOQL("select a.toString() from [C a where /really_secret_string/(a.toString())");
+      runOQL("select escape(a.toString()) from [C a where /really_secret_string/(a.toString())");
     }
     finally {
       tearDown();
