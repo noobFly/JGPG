@@ -10,7 +10,6 @@ secrets from memory/heap.
 
 TODO
 ----
-* Replace all println's with [logback](http://logback.qos.ch/)
 * Figure out how to disable the output of Gradles tests since it screws with
   the searching of the secret in the heap.
 * Fix storing non-armored GPG data in byte arrays. No matter how I tried I

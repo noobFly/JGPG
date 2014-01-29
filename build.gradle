@@ -9,7 +9,11 @@ dependencies.testCompile(
     ['junit:junit:4.+'],
     ['junit-addons:junit-addons:1.+'],
 )
-dependencies.compile fileTree(dir: 'libs', include: '*.jar')
+dependencies.compile(
+ fileTree(dir: 'libs', include: '*.jar'),
+ ['org.slf4j:slf4j-api:1.7.+'],
+ ['ch.qos.logback:logback-classic:1.1.+'],
+)
 
 task checkJhat {
   def result = exec {

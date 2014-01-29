@@ -6,8 +6,11 @@ import java.net.*;
 import javax.xml.xpath.*;
 import org.xml.sax.InputSource;
 import org.w3c.dom.NodeList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SearchInHeap {
+  public static final Logger log = LoggerFactory.getLogger(new Object(){}.getClass().getEnclosingClass().getSimpleName());
   String jhatPort = Integer.toString(7000 + Integer.parseInt(System.getProperty("org.gradle.test.worker")));
   String jhat;
   String hprof;
@@ -63,10 +66,10 @@ public class SearchInHeap {
     hprof = tmp + "/" + pid + ".hprof";
     jhat = "jhat -port " + jhatPort + " " + hprof;
     try {
-      System.out.println("Dumping heap with jmap");
+      log.info("Dumping heap with jmap");
       Runtime.getRuntime().exec(new String[] {"jmap", String.format("-dump:format=b,file=%s", hprof), pid}).waitFor();
 
-      System.out.println("Starting jhat");
+      log.info("Starting jhat");
       Process p=Runtime.getRuntime().exec(jhat);
 
       BufferedReader reader=new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -75,7 +78,7 @@ public class SearchInHeap {
       {
         line=reader.readLine();
       }
-      System.out.println("jhat ready!");
+      log.info("jhat ready!");
       Thread.sleep(1000);
     }
     finally {
@@ -84,7 +87,8 @@ public class SearchInHeap {
   }
 
   public void runOQL(String oql) throws IOException, InterruptedException, XPathExpressionException {
-    System.out.println("Running OQL query...");
+    log.info("Running OQL query...");
+    log.debug("OQL query: " + oql);
     URL oqlUrl = new URL("http://localhost:" + jhatPort + "/oql/?query=" + URLEncoder.encode(oql, "UTF-8"));
     URLConnection oqlConnection = oqlUrl.openConnection();
     BufferedReader in = new BufferedReader(new InputStreamReader(oqlConnection.getInputStream()));

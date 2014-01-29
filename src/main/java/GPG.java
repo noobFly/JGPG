@@ -6,10 +6,11 @@ import java.util.Arrays;
 import java.io.*;
 import se.soy.securerstring.SecurerString;
 import java.lang.reflect.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GPG {
-  // FIXME Remove when done
-  static<T> void println(T arg) { System.out.println(arg); }
+  public static final Logger log = LoggerFactory.getLogger(new Object(){}.getClass().getEnclosingClass().getSimpleName());
 
   private final List<String> pre_command = new ArrayList<String>(Arrays.asList(
     "gpg",
@@ -30,8 +31,7 @@ public class GPG {
       command.add(file.getAbsolutePath());
     }
 
-    println("Command: " + pre_command + command);
-    println("----------");
+    log.debug("Command: " + pre_command + command);
 
     try {
       List<String> commandline = new ArrayList<String>(pre_command);
@@ -68,10 +68,10 @@ public class GPG {
       buf = new char[buf_size];
       int read_now = 0;
       int read_until_now = 0;
-      System.out.println("Buffer size:" + buf_size);
+      log.debug("Buffer size: " + buf_size);
       while ((read_now = stdout.read(buf, read_until_now, buf.length - read_until_now)) != -1) {
         if (buf.length - read_until_now < buf_size) {
-          System.out.println("Expanding char");
+          log.debug("Expanding char");
           char newbuff[] = new char[buf.length << 1];
           System.arraycopy(buf, 0, newbuff, 0, read_until_now);
           SecurerString.secureErase(buf);
@@ -80,7 +80,7 @@ public class GPG {
         read_until_now += read_now;
       }
       stdout.close();
-      System.out.println(read_until_now);
+      log.debug("Data read into buf: " + read_until_now);
     }
     catch (IOException|InterruptedException e) {
       SecurerString.secureErase(buf);
@@ -105,7 +105,7 @@ public class GPG {
           c = className.getClass();
         }
 
-        System.out.println("invoking " + c.getSimpleName () + "::[" + methodName + "]...");
+        log.debug("Invoking " + c.getSimpleName () + "::[" + methodName + "]");
         method = c.getDeclaredMethod(methodName, buf.getClass());
         method.invoke(className, buf);
       }
