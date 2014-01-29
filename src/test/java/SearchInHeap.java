@@ -96,17 +96,11 @@ public class SearchInHeap {
     in.close();
 
     NodeList nodeList;
-    try {
-      // What I don't do just not to add an external dependency...
-      xml = xml.replaceAll("(\\w+)=([^'\"][^ ]+?)([^'\"])", "$1='$2'$3");
-      String xpath = "//table[@border=1]//td";
-      XPath xPath = XPathFactory.newInstance().newXPath();
-      nodeList = (NodeList) xPath.evaluate(xpath, new InputSource(new StringReader(xml)), XPathConstants.NODESET);
-    }
-    catch (javax.xml.xpath.XPathExpressionException e) {
-      System.out.println(xml);
-      throw e;
-    }
+    // What I don't do just not to add an external dependency...
+    xml = xml.replaceAll("(\\w+)=([^'\"][^ ]+?)([^'\"])", "$1='$2'$3");
+    String xpath = "//table[@border=1]//td";
+    XPath xPath = XPathFactory.newInstance().newXPath();
+    nodeList = (NodeList) xPath.evaluate(xpath, new InputSource(new StringReader(xml)), XPathConstants.NODESET);
     theAssert(nodeList.getLength());
   }
 
