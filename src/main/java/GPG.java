@@ -30,7 +30,7 @@ public class GPG {
   private boolean verified = false;
   private String signedBy = null;
 
-  private void pre_output() {
+  private void pre_output() throws GPGException {
     if (null != file) {
       command.add(file.getAbsolutePath());
     }
@@ -108,11 +108,11 @@ public class GPG {
       SecurerString.secureErase(buf);
       SecurerString.secureErase(gpg.data);
       gpg = null;
-      throw new RuntimeException(e);
+      throw new GPGException(e.toString());
     }
   }
 
-  public void output(Object className, String methodName) {
+  public void output(Object className, String methodName) throws GPGException {
     pre_output();
 
     try {
@@ -142,7 +142,7 @@ public class GPG {
     }
   }
 
-  public void output(File file) {
+  public void output(File file) throws GPGException {
     command.add("--output");
     command.add(file.getAbsolutePath());
 

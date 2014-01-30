@@ -24,7 +24,6 @@ gpg: mdc_packet with invalid encoding
 gpg: decryption failed: Invalid packet
 gpg: [don't know]: invalid packet (ctb=64)
 ```
-* Change from RuntimeException? Investigate why it doesn't need to be catched and what we should use instead.
 
 License
 -------

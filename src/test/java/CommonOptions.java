@@ -10,7 +10,7 @@ public class CommonOptions {
   private List<String> recipients = Arrays.asList("F870C097", "7A41522E");
   private File toEncrypt = new File(System.getProperty("test.resources") + "/test");
 
-  @Test public void localUsers() {
+  @Test public void localUsers() throws GPGException {
     for (String recipient: recipients) {
       File toDecrypt = new File(System.getProperty("test.resources") + "/test.asc");
       File decryptedTest = new File(System.getProperty("test.resources") + "/CommonOptions-localUsers-" + recipient);
@@ -19,7 +19,7 @@ public class CommonOptions {
     }
   }
 
-  @Test public void multipleRecipients() {
+  @Test public void multipleRecipients() throws GPGException {
     File encryptedTest = new File(System.getProperty("test.resources") + "/multipleRecipients.asc");
     GPG.encrypt(toEncrypt).armor().recipient(recipients).output(encryptedTest);
     for (String recipient: recipients) {
@@ -29,7 +29,7 @@ public class CommonOptions {
     }
   }
 
-  @Test(expected=GPGException.class) public void generateGPGException() {
+  @Test(expected=GPGException.class) public void generateGPGException() throws GPGException {
     File toDecrypt = new File(System.getProperty("test.resources") + "/generateGPGException");
     try {
       toDecrypt.createNewFile();
@@ -38,11 +38,11 @@ public class CommonOptions {
     GPG.decrypt(toDecrypt).output(System.out, "println");
   }
 
-  @Test(expected=GPGException.class) public void erroneousHome() {
+  @Test(expected=GPGException.class) public void erroneousHome() throws GPGException {
     GPG.encrypt(toEncrypt).home(System.getProperty("temporaryDir") + "/fake-gpg-home").output(System.out, "println");
   }
 
-  @Test public void verifySigning() {
+  @Test public void verifySigning() throws GPGException {
     File toDecrypt = new File(System.getProperty("test.resources") + "/test.asc");
     GPG.decrypt(toDecrypt).verify().output(System.out, "println");
   }

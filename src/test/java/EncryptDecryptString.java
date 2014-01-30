@@ -1,6 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
-import se.soy.gpg.GPG;
+import se.soy.gpg.*;
 import java.io.File;
 import java.io.IOException;
 import se.soy.securerstring.SecurerString;
@@ -22,7 +22,7 @@ public class EncryptDecryptString extends SearchInHeap {
     SecurerString.secureErase(unTrimmedString);
   }
 
-  @Test public void encryptDecryptString() throws IOException {
+  @Test public void encryptDecryptString() throws IOException, GPGException {
     String toEncrypt = GPG.readFileAsString(System.getProperty("test.resources") + "/test", null);
     GPG.encrypt(toEncrypt).armor().sign().output(EncryptDecryptString.class, "encryptToString");
     toEncrypt = GPG.readFileAsString(System.getProperty("test.resources") + "/test", null);

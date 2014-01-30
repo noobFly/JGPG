@@ -1,6 +1,6 @@
 package se.soy.gpg;
 
-public class GPGException extends RuntimeException {
+public class GPGException extends Exception {
   public GPGException() {
   }
 
