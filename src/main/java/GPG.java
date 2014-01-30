@@ -8,6 +8,7 @@ import se.soy.securerstring.SecurerString;
 import java.lang.reflect.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.regex.Pattern;
 
 public class GPG {
   public static final Logger log = LoggerFactory.getLogger(new Object(){}.getClass().getEnclosingClass().getSimpleName());
@@ -25,6 +26,9 @@ public class GPG {
   private String data;
   private char[] buf;
   private File file;
+  private boolean checkVerification = false;
+  private boolean verified = false;
+  private String signedBy = null;
 
   private void pre_output() {
     if (null != file) {
@@ -47,15 +51,33 @@ public class GPG {
       p.getOutputStream().close();
 
       String line = null;
+      String stderr_out = null;
+      BufferedReader stderr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+      String signatureRegex = "^gpg: Signature made .* key ID (.*)$";
+      String nameEmailRegex = "^gpg: Good signature from \"(.*)\"$";
+      while ((line = stderr.readLine ()) != null) {
+        if (Pattern.matches(signatureRegex, line)) {
+          signedBy = "0x" + line.replaceAll(signatureRegex, "$1");
+        }
+        else if (Pattern.matches(nameEmailRegex, line)) {
+          signedBy = line.replaceAll(nameEmailRegex, "$1") + " " + signedBy;
+          verified = true;
+        }
+        stderr_out += "\n" + line;
+      }
+      if (checkVerification) {
+        log.debug("signedBy: " + signedBy);
+        log.debug("verified?: " + verified);
+        if (!verified) {
+          throw new GPGException("Verification requested but FAILED:\n" + signedBy);
+        }
+      }
+      stderr.close();
+
       int code = p.waitFor();
       if (code != 0) {
         String exception = String.format("Exit status: %d", code);
-
-        BufferedReader stderr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-        while ((line = stderr.readLine ()) != null) {
-          exception += "\n" + line;
-        }
-        stderr.close();
+        exception += stderr_out;
         SecurerString.secureErase(gpg.data);
         gpg = null;
         throw new GPGException(exception);
@@ -218,6 +240,11 @@ public class GPG {
   public GPG home(String home) {
     command.add("--home");
     command.add(home);
+    return this;
+  }
+
+  public GPG verify() {
+    checkVerification = true;
     return this;
   }
 }
