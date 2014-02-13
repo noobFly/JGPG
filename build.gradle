@@ -78,7 +78,7 @@ publishing {
           }
           licenses {
             license {
-              name 'ISC license'
+              name 'ISC License'
               url 'https://www.isc.org/downloads/software-support-policy/isc-license/'
               distribution 'repo'
             }
