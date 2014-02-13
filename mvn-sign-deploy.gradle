@@ -41,3 +41,8 @@ task javadocJar (type: Jar, dependsOn: javadoc) {
   classifier = 'javadoc'
   from javadoc.destinationDir
 }
+
+task cleanRepo(type: Delete) {
+   delete 'repo'
+}
+clean.dependsOn cleanRepo
