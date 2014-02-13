@@ -6,7 +6,7 @@ defaultTasks 'build'
 repositories.mavenCentral()
 
 group = "se.soy.${project.name[1..-1].toLowerCase()}"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0"
 ext {
   url = "https://github.com/simmel/${project.name}"
   gitRepo = "git@github.com:simmel/${project.name}.git"
