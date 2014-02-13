@@ -97,7 +97,7 @@ publishing {
                 resolveStrategy = Closure.DELEGATE_ONLY
                 groupId 'org.apache.maven.plugins'
                 artifactId 'maven-gpg-plugin'
-                version '1.3'
+                version '1.4'
                 configuration {
                   useAgent 'true'
                   executable 'src/build/scripts/gpg'
