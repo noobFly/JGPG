@@ -1,8 +1,16 @@
 apply plugin: 'java'
-
+apply plugin: 'maven-publish'
+apply from: 'mvn-sign-deploy.gradle'
 defaultTasks 'build'
 
 repositories.mavenCentral()
+
+group = "se.soy.${project.name[1..-1].toLowerCase()}"
+version = "1.0.0"
+ext {
+  url = "https://github.com/simmel/${project.name}"
+  gitRepo = "git@github.com:simmel/${project.name}.git"
+}
 
 dependencies.testCompile(
     ['junit:junit:4.+'],
@@ -34,4 +42,71 @@ test {
   testLogging.showStandardStreams = true
   forkEvery 1
   maxParallelForks Runtime.getRuntime().availableProcessors();
+}
+
+publishing {
+  publications {
+    jar(MavenPublication) {
+      from components.java
+
+      artifactId "${project.name[1..-1]}"
+
+      artifact (sourceJar) {
+        classifier = 'sources'
+      }
+      artifact (javadocJar) {
+        classifier = 'javadoc'
+      }
+
+      pom.withXml {
+        asNode().children().last() + {
+          resolveStrategy = Closure.DELEGATE_FIRST
+          parent {
+            resolveStrategy = Closure.DELEGATE_ONLY
+            groupId 'org.sonatype.oss'
+            artifactId 'oss-parent'
+            version '7'
+          }
+          name project.name
+          description 'a Java wrapper for GPG2'
+          url url
+          packaging 'jar'
+          scm {
+            url project.gitRepo
+            connection "scm:${project.gitRepo}"
+            developerConnection "scm:${project.gitRepo}"
+          }
+          licenses {
+            license {
+              name 'ISC license'
+              url 'https://www.isc.org/downloads/software-support-policy/isc-license/'
+              distribution 'repo'
+            }
+          }
+          developers {
+            developer {
+              id 'simmel'
+              name 'Simon Lundström'
+              email 'simmel@soy.se'
+            }
+          }
+
+          build {
+            plugins {
+              plugin {
+                resolveStrategy = Closure.DELEGATE_ONLY
+                groupId 'org.apache.maven.plugins'
+                artifactId 'maven-gpg-plugin'
+                version '1.1'
+                configuration {
+                  useAgent 'true'
+                  executable 'src/build/scripts/gpg'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
