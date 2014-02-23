@@ -13,13 +13,13 @@ ext {
 }
 
 dependencies.testCompile(
-    ['junit:junit:4.+'],
-    ['junit-addons:junit-addons:1.+'],
+  ['junit:junit:4.+'],
+  ['junit-addons:junit-addons:1.+'],
 )
 dependencies.compile(
- ['se.soy.securerstring:SecurerString:1.2.+'],
- ['org.slf4j:slf4j-api:1.7.+'],
- ['ch.qos.logback:logback-classic:1.1.+'],
+  ['se.soy.securerstring:SecurerString:1.2.+'],
+  ['org.slf4j:slf4j-api:1.7.+'],
+  ['ch.qos.logback:logback-classic:1.1.+'],
 )
 
 task checkJhat {
